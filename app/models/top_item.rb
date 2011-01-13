@@ -6,7 +6,7 @@ class TopItem < ActiveRecord::Base
   before_create :set_item_recent_rating, :if => :item_rateable?
   before_create :set_item_recent_visits, :if => :item_visitable?
 
-  scope :with_items_and_associations, includes(:item, {:item => :person}, {:item => :conversation}, {:item => :issue})
+  scope :with_items_and_associations, includes(:item, {:item => :conversation}, {:item => :issue})
 
   def self.for(for_item, options={})
     if for_item.is_a?(Hash)
