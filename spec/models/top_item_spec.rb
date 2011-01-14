@@ -138,12 +138,13 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
     items.should_not include(@issue_comment)
   end
   it "returns only items from specified item by id" do
-    result = TopItem.for(:conversation => @conversation.id)
+    result = TopItem.newest_items(10).for(:conversation => @conversation.id)
     items = result.collect{ |ti| ti.item }
 
     items.should include(@conversation)
     items.should include(@conversation_comment)
     items.should_not include(@conversation_question)
+    items.should_not include(@conversation_question.conversation)
   end
   it "returns only items from specified items by conditions" do
     result = TopItem.for(:conversation, {:content => "oh hai?", :type => :question})

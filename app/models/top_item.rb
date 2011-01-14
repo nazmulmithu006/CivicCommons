@@ -39,7 +39,7 @@ class TopItem < ActiveRecord::Base
           column_id = reflection.options[:foreign_key] || "#{assoc}_id"
 
           # Eager-query for all associated records. E.g. Person.where(:id => [1,5,10])
-          records = assoc.to_s.capitalize.constantize.where( :id => _items.collect{|i| i[column_id]}.uniq )
+          records = assoc.to_s.classify.constantize.where( :id => _items.collect{|i| i[column_id]}.uniq )
 
           # Now that all top_items.items and all associated records are cached, match them together
           # E.g. the following is essentially analogous to item.send("person=", records[1]), or item.person = records[1]
@@ -69,10 +69,10 @@ class TopItem < ActiveRecord::Base
     #
     # For :person means:
     # item has person and person_id = :person_id
-    
+    #
     # direct_items for (a)
     direct_items = self.scoped.includes(:item).where(:item_type => for_item_type.to_s.classify)
-    direct_items.where(:item_id => for_item_id) if for_item_id
+    direct_items = direct_items.where(:item_id => for_item_id) if for_item_id
 
     # associated_items for (b)
     top_items = TopItem.arel_table
