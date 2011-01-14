@@ -10,7 +10,7 @@ class ConversationsController < ApplicationController
     @main_article = Article.conversation_main_article.first
     @sub_articles = Article.conversation_sub_articles.limit(3)
     @regions = Region.all
-    @recent_items = [] #TopItem.newest_items(3).for(:conversation).collect(&:item)
+    @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @conversations }
@@ -32,7 +32,7 @@ class ConversationsController < ApplicationController
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    @recent_items = [] #TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
+    @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
 
     respond_to do |format|
       format.html # show.html.erb
