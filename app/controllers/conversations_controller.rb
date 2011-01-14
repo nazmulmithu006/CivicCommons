@@ -1,5 +1,6 @@
 class ConversationsController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
+  before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
   # GET /conversations.xml
@@ -9,7 +10,7 @@ class ConversationsController < ApplicationController
     @main_article = Article.conversation_main_article.first
     @sub_articles = Article.conversation_sub_articles.limit(3)
     @regions = Region.all
-    @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
+    @recent_items = [] #TopItem.newest_items(3).for(:conversation).collect(&:item)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @conversations }
@@ -31,7 +32,7 @@ class ConversationsController < ApplicationController
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
+    @recent_items = [] #TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -75,7 +76,6 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html{ render :partial => "conversations/node_conversation", :layout => false}
     end
   end
 
@@ -156,6 +156,7 @@ class ConversationsController < ApplicationController
   # POST /conversations.xml
   def create
     ActiveRecord::Base.transaction do
+      @conversation = Conversation.new(params[:conversation])
       @conversation = Conversation.new(params[:conversation])
       #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
       #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
