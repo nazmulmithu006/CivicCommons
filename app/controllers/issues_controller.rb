@@ -11,7 +11,7 @@ class IssuesController < ApplicationController
     @regions = Region.all
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
-    @recent_items = [] #TopItem.newest_items(3).for(:issue).collect(&:item)
+    @recent_items = TopItem.newest_items(3).for(:issue).collect(&:item)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +34,7 @@ class IssuesController < ApplicationController
     @media_contributions = @issue.media_contributions.most_recent
     
     @issue.visit!((current_person.nil? ? nil : current_person.id))
-    @recent_items = [] #TopItem.newest_items(3).for(:issue => @issue.id).collect(&:item)
+    @recent_items = TopItem.newest_items(3).for(:issue => @issue.id).collect(&:item)
 
     respond_to do |format|
       format.html # show.html.erb

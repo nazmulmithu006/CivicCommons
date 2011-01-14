@@ -6,7 +6,53 @@ class TopItem < ActiveRecord::Base
   before_create :set_item_recent_rating, :if => :item_rateable?
   before_create :set_item_recent_visits, :if => :item_visitable?
 
-  scope :with_items_and_associations, includes(:item, {:item => :person}, {:item => :conversation}, {:item => :issue})
+  #scope :with_items_and_associations, includes(:item, {:item => :person}, {:item => :conversation}, {:item => :issue})
+
+  # Eagerly loads associations for :item, {:item => :person}, {:item => :conversation}, and {:item => :issue}
+  # Cannot be done normally with a scope because not all items have these associations.
+  # We want to only load each association if it exists for that item, and skip it if not.
+  #
+  # ALWAYS include this as the last scope in a chain, because it must load all currently scoped top_items
+  # in order to evaluate their associations, etc, so if you don't limit the number of top_items *before*
+  # this scope method, it will eagerly load ALL top_items and associations
+  # E.g.
+  #   TopItem.limit(5).with_items_and_associations
+  # DO NOT DO
+  #   TopItem.with_items_and_associations.limit(5)
+  def self.with_items_and_associations
+    # Use AR to eagerly load items
+    top_items = self.scoped.includes(:item)
+    items = top_items.collect(&:item)
+
+    # Manually load and attach person, conversation, and/or issue to each item
+    class_to_reflection = {}
+    [:person, :conversation, :issue].each do |assoc|
+      class_to_reflection[assoc] ||= {}
+
+      # Group all items in scope by their base_class type and return their reflection for given association (assoc)
+      items.group_by { |item| class_to_reflection[assoc][item.class] ||= item.class.reflections[assoc]}.each do |reflection, _items|
+
+        # If item has the reflection; i.e. given association (assoc) exists...
+        if reflection
+
+          # Set the foreign key for the given reflection
+          column_id = reflection.options[:foreign_key] || "#{assoc}_id"
+
+          # Eager-query for all associated records. E.g. Person.where(:id => [1,5,10])
+          records = assoc.to_s.capitalize.constantize.where( :id => _items.collect{|i| i[column_id]}.uniq )
+
+          # Now that all top_items.items and all associated records are cached, match them together
+          # E.g. the following is essentially analogous to item.send("person=", records[1]), or item.person = records[1]
+          _items.each do |_item|
+            top_items.detect{|ti| ti.item_id == _item.id && ti.item_type == _item.class.base_class.name}.item.send( "#{assoc}=", records.detect{|p| p.id == _item[column_id]} )
+          end
+        end
+      end
+    end
+
+    # Return all top_items with their included items and item associations
+    return top_items
+  end
 
   def self.for(for_item, options={})
     if for_item.is_a?(Hash)
