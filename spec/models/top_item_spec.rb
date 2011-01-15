@@ -115,7 +115,8 @@ end
 describe TopItem, "when retrieving top items for specific polymorphic association" do
   before(:each) do
     @conversation = Factory.create(:conversation)
-    @issue = Factory.create(:issue)
+    # @issue.id set below to @convo id for spec on #with_items_and_associations that ensures associations are matched to correct items without being mixed up
+    @issue = Factory.create(:issue, :id => @conversation.id)
 
     @person = Factory.create(:normal_person)
     @conversation_comment = Factory.create(:contribution, :conversation => @conversation, :person => @person)
@@ -161,14 +162,14 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
     items.should include(@issue_comment)
     items.should_not include(@conversation_question)
   end
-  it "is chainable from an Arel scope" do
+  it "is chainable from an Arel scope when #for used" do
     result = []
     lambda {
       result = TopItem.limit(2).for(:conversation)
     }.should_not raise_error
     result.size.should == 2
   end
-  it "allows Arel scopes to be chained to it" do
+  it "allows Arel scopes to be chained to it when #for used" do
     # Would need to include direct_items in same ActiveRecord::Relation
     # as associated_items, so that a single Relation object could be
     # returned from TopItem#for. However, for that to work, would need
@@ -180,5 +181,17 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
       result = TopItem.for(:conversation).limit(2)
     }.should_not raise_error
     result.size.should == 2
+  end
+  it "eagerly loads associations on item polymorphic associations when they exist, and doesn't error if they don't" do
+    lambda {
+      result = TopItem.with_items_and_associations.collect(&:item)
+    }.should_not raise_error
+  end
+  it "matches polymorphic association items with correct item associations" do
+    result = TopItem.with_items_and_associations
+    items = result.collect(&:item)
+    items.each do |item|
+      item.changed?.should be_false
+    end
   end
 end

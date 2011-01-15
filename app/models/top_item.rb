@@ -54,6 +54,9 @@ class TopItem < ActiveRecord::Base
     return top_items
   end
 
+  # Until we can upgrade to Arel 2.0, this method uses some workarounds, which make it
+  # chainable on other scopes, but other scopes cannot be chained to it,
+  # so only use this at the end of scope chains
   def self.for(for_item, options={})
     if for_item.is_a?(Hash)
       for_item_type = for_item.keys[0]
