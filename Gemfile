@@ -56,7 +56,8 @@ group :development, :test do
   gem "capybara", "~> 0.4.0"
 end
 
-gem 'devise', '1.1.2'
+gem 'devise', '1.2.rc', :git => 'git://github.com/plataformatec/devise.git'
+gem "oa-oauth", :require => "omniauth/oauth"
 
 gem 'shoulda'
 gem 'paperclip', "2.3.8"

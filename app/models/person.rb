@@ -8,7 +8,8 @@ class Person < ActiveRecord::Base
   # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable,
+         :omniauthable
 
   attr_accessor :organization_name, :send_welcome
 

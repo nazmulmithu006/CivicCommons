@@ -17,7 +17,20 @@ Civiccommons::Application.routes.draw do
   #Application Root
   root to: "homepage#show"
 
- #Custom Matchers
+  #Devise Routes
+  devise_for :people,
+             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks"},
+             :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
+
+  devise_scope :person do
+    match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
+  end
+
+  constraints FilterConstraint do
+    get 'conversations/:filter', to: 'conversations#filter', as: 'conversations_filter'
+  end
+
+#Custom Matchers
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
