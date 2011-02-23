@@ -30,7 +30,8 @@ class Person < ActiveRecord::Base
   validates_presence_of :name
 
   # Ensure format of salt
-  validates_with PasswordSaltValidator
+  # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
+  # validates_with PasswordSaltValidator 
 
   has_attached_file :avatar,
     :styles => {
