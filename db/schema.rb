@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218202823) do
+ActiveRecord::Schema.define(:version => 20110223184348) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -33,6 +33,20 @@ ActiveRecord::Schema.define(:version => 20110218202823) do
     t.string   "embed_target",         :limit => 1000
     t.string   "youtube_id"
   end
+
+  create_table "authentications", :force => true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "token"
+    t.string   "secret"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["person_id"], :name => "index_authentications_on_person_id"
+  add_index "authentications", ["provider"], :name => "index_authentications_on_provider"
+  add_index "authentications", ["uid"], :name => "index_authentications_on_uid"
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -131,6 +145,37 @@ ActiveRecord::Schema.define(:version => 20110218202823) do
 
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.datetime "when"
+    t.string   "where"
+    t.integer  "moderator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "total_visits"
+    t.integer  "recent_visits"
+    t.integer  "total_rating"
+    t.integer  "recent_rating"
+    t.datetime "last_visit_date"
+    t.datetime "last_rating_date"
+  end
+
+  create_table "events_guides", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "guide_id"
+  end
+
+  create_table "invites", :force => true do |t|
+    t.integer  "person_id"
+    t.string   "invitation_token",   :limit => 40
+    t.datetime "invitation_sent_at"
+    t.boolean  "valid_invite"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "issues", :force => true do |t|
     t.string   "name"

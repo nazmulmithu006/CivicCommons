@@ -10,6 +10,11 @@ describe Person do
 end
 
 describe Person do
+  context "Associations" do
+    it "should has_many Authentications" do
+      Person.reflect_on_association(:authentications).macro == :has_many
+    end
+  end
 
   describe "validate required data" do
 
