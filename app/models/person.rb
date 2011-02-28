@@ -17,6 +17,7 @@ class Person < ActiveRecord::Base
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
                   :avatar
 
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
@@ -83,7 +84,7 @@ class Person < ActiveRecord::Base
   def avatar_height_for_style(style)
     geometry_for_style(style, :avatar).height.to_i
   end
-
+  
   def name=(value)
     @name = value
     self.first_name, self.last_name = self.class.parse_name(value)
@@ -142,6 +143,10 @@ class Person < ActiveRecord::Base
     return false if skip_email_marketing
 
     newly_confirmed? ? true : false
+  end
+  
+  def facebook_authenticated?
+    !facebook_authentication.blank?
   end
 
 

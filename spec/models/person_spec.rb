@@ -200,4 +200,29 @@ describe Person do
     end
   end
 
+  context "Facebook authentication" do
+    describe "when having a facebook authentication associated" do
+      def given_a_person_with_facebook_auth
+        @person = Factory.build(:normal_person)
+        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person.facebook_authentication = @authentication 
+        @person.save
+      end
+      it "should show that it does have the correct authentication" do
+        given_a_person_with_facebook_auth
+        @person.facebook_authentication.should == @authentication
+        @person.facebook_authentication.should be_persisted
+      end
+      it "should return true if an account is facebook authenticated" do
+        given_a_person_with_facebook_auth
+        @person.facebook_authenticated?.should be_true
+      end
+    end
+    describe "when an account is not facebook authenticated" do
+      it "should return false if we check for it" do
+        @person = Factory.build(:normal_person)
+        @person.facebook_authenticated?.should be_false
+      end
+    end
+  end
 end
