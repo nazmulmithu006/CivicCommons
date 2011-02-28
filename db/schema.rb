@@ -146,37 +146,6 @@ ActiveRecord::Schema.define(:version => 20110223184348) do
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
-  create_table "events", :force => true do |t|
-    t.string   "title"
-    t.datetime "when"
-    t.string   "where"
-    t.integer  "moderator_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "total_visits"
-    t.integer  "recent_visits"
-    t.integer  "total_rating"
-    t.integer  "recent_rating"
-    t.datetime "last_visit_date"
-    t.datetime "last_rating_date"
-  end
-
-  create_table "events_guides", :id => false, :force => true do |t|
-    t.integer "event_id"
-    t.integer "guide_id"
-  end
-
-  create_table "invites", :force => true do |t|
-    t.integer  "person_id"
-    t.string   "invitation_token",   :limit => 40
-    t.datetime "invitation_sent_at"
-    t.boolean  "valid_invite"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -205,9 +174,7 @@ ActiveRecord::Schema.define(:version => 20110223184348) do
     t.string   "password"
     t.string   "email",                               :default => "",    :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
-    t.string   "remember_token"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                       :default => 0
     t.datetime "current_sign_in_at"
