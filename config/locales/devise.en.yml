@@ -39,5 +39,7 @@ en:
       unlock_instructions:
         subject: 'Unlock Instructions'
     omniauth_callbacks:
+      linked_success: 'Successfully linked your accaunt to %{kind}'
+      linked_failure: 'Could not link your accaunt to %{kind}'
       success: 'Successfully authorized from %{kind} account.'
       failure: 'Could not authorize you from %{kind} because "%{reason}".'

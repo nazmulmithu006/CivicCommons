@@ -93,3 +93,9 @@ end
 # warning: regexp match /.../n against to UTF-8 string
 $VERBOSE = nil
 
+Devise::OmniAuth.test_mode!
+
+After do
+ Devise::OmniAuth.unshort_circuit_authorizers!
+ Devise::OmniAuth.reset_stubs!(:facebook)
+end
