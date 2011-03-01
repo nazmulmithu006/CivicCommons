@@ -1,13 +1,13 @@
 <div class="offset-2">
-  <%# user_profile(current_person).html_safe %>
+  <%= user_profile(current_person).html_safe %>
   <h4>
-    <%#= text_profile(current_person).html_safe %>
+    <%= text_profile(current_person).html_safe %>
   </h4>
   <p style='margin-bottom: 0;'>
-    <%#= link_to_settings(current_person).html_safe %>
+    <%= link_to_settings(current_person).html_safe %>
     <br />
-    <%#= link_to "Logout", destroy_person_session_path, :class => 'user-link' %>
-    <%#= link_to "Link my account with Facebook", person_omniauth_authorize_path(:facebook), :class => 'createacct-link facebook-auth' unless current_person.facebook_authenticated?%>
-    <%=link_to "hello","http://google.com", :class => 'hello'%>
+    <%= link_to "Logout", destroy_person_session_path, :class => 'user-link' %>
+    <%= link_to "Link my account with Facebook", person_omniauth_authorize_path(:facebook), :class => 'createacct-link facebook-auth' unless current_person.facebook_authenticated?%>
+    <%#link_to "hello","http://google.com", :class => 'hello'%>
   </p>
 </div>
