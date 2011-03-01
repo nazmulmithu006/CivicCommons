@@ -148,6 +148,26 @@ class Person < ActiveRecord::Base
   def facebook_authenticated?
     !facebook_authentication.blank?
   end
+  
+  def link_with_facebook(authentication)
+    ActiveRecord::Base.transaction do
+      self.facebook_authentication = authentication  
+      self.encrypted_password = ''
+      save
+    end
+  end
+  
+  # Overiding Devise::Models::DatabaseAuthenticatable
+  # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
+  def valid_password?(password)
+    encrypted_password.blank? ? false : super
+  end
+  
+  # If this account has been linked to facebook auth, then password is not required
+  def password_required? 
+    facebook_authenticated? ? false : super
+  end
+  
 
 
 # Implement Marketable method

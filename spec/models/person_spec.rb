@@ -205,8 +205,7 @@ describe Person do
       def given_a_person_with_facebook_auth
         @person = Factory.build(:normal_person)
         @authentication = Factory.build(:authentication, :provider => 'facebook')
-        @person.facebook_authentication = @authentication 
-        @person.save
+        @person.link_with_facebook(@authentication)
       end
       it "should show that it does have the correct authentication" do
         given_a_person_with_facebook_auth
@@ -217,11 +216,18 @@ describe Person do
         given_a_person_with_facebook_auth
         @person.facebook_authenticated?.should be_true
       end
+      it "should wiped out the current person's password, so they can't login using local account anymore" do
+        @person = Factory.create(:normal_person, :password => 'password')
+        @person.valid_password?('password').should be_true
+        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person.link_with_facebook(@authentication)
+        @person.valid_password?('password').should be_false 
+      end
     end
     describe "when an account is not facebook authenticated" do
       it "should return false if we check for it" do
         @person = Factory.build(:normal_person)
-        @person.facebook_authenticated?.should be_false
+        @person.facebook_authenticated?.should be_false 
       end
     end
   end

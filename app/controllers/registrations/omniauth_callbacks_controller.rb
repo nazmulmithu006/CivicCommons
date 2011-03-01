@@ -2,8 +2,8 @@ class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
   
   def facebook
     if signed_in? && !current_person.facebook_authenticated?
-      current_person.facebook_authentication = Authentication.new_from_auth_hash(env['omniauth.auth'])
-      if current_person.save
+      authentication = Authentication.new_from_auth_hash(env['omniauth.auth'])
+      if current_person.link_with_facebook(authentication)
         flash[:notice] = I18n.t "devise.omniauth_callbacks.linked_success", :kind => "Facebook"
       else
         flash[:notice] = I18n.t "devise.omniauth_callbacks.linked_failure", :kind => "Facebook"
