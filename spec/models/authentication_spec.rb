@@ -28,7 +28,7 @@ describe Authentication do
     describe "building authentication model from omniauth hash" do
       def given_an_authentication_from_hash
         #This hash is taken from an actual facebook hash. scrubbed of personal identifiable information.
-        hash = {"provider"=>"facebook", 
+        @hash = {"provider"=>"facebook", 
                 "uid"=>"123456107280617", 
                 "credentials"=>{"token"=>"1234567890"}, 
                 "user_info"=>{"nickname"=>"profile.php?id=123456107280617", "first_name"=>"John", "last_name"=>"Doe", "name"=>"John Doe", "urls"=>{"Facebook"=>"http://www.facebook.com/profile.php?id=123456107280617", "Website"=>nil}}, 
@@ -43,7 +43,7 @@ describe Authentication do
                   "timezone"=>-5, 
                   "locale"=>"en_US", 
                   "updated_time"=>"2010-03-10T23:53:20+0000"}}}
-        @authentication = Authentication.new_from_auth_hash(hash)
+        @authentication = Authentication.new_from_auth_hash(@hash)
       end
       it "should have uid" do
         given_an_authentication_from_hash
@@ -52,6 +52,12 @@ describe Authentication do
       it "should have provider" do
         given_an_authentication_from_hash
         @authentication.provider.should == 'facebook'
+      end
+      it "should find the authentication based on the hash" do
+        given_an_authentication_from_hash
+        @authentication.person_id = 1
+        @authentication.save
+        Authentication.find_from_auth_hash(@hash).should == @authentication
       end
     end
   end

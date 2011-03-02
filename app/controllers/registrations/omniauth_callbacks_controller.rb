@@ -8,8 +8,13 @@ class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
       else
         flash[:notice] = I18n.t "devise.omniauth_callbacks.linked_failure", :kind => "Facebook"
       end
+      redirect_to root_path
+    elsif authentication = Authentication.find_from_auth_hash(env['omniauth.auth'])
+      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
+      sign_in_and_redirect authentication.person, :event => :authentication
+    else
+      redirect_to root_path
     end
-    redirect_to root_path
   end
   
 end

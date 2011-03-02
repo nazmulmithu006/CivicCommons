@@ -8,4 +8,9 @@ class Authentication < ActiveRecord::Base
           :uid => auth_hash['uid'], 
           :token => (auth_hash['credentials']['token'] if auth_hash['credentials']) ) 
   end
+  
+  def self.find_from_auth_hash(auth_hash)
+    find_by_provider_and_uid( auth_hash['provider'], auth_hash['uid'])
+  end
+  
 end
