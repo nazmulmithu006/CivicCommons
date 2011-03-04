@@ -224,6 +224,18 @@ describe Person do
         @person.valid_password?('password').should be_false 
       end
     end
+    describe "link_with_facebook" do
+      it "should return true if correctly saved" do
+        @person = Factory.build(:normal_person)
+        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person.link_with_facebook(@authentication).should be_true
+      end
+      it "should return false if incorrectly saved" do
+        @person = Factory.build(:normal_person)
+        @authentication = Authentication.new
+        @person.link_with_facebook(@authentication).should be_false
+      end
+    end
     describe "when an account is not facebook authenticated" do
       it "should return false if we check for it" do
         @person = Factory.build(:normal_person)

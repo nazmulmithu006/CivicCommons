@@ -153,7 +153,8 @@ class Person < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       self.facebook_authentication = authentication  
       self.encrypted_password = ''
-      save
+      save!
+      facebook_authentication.persisted?
     end
   end
   
