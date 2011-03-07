@@ -8,6 +8,5 @@
     <br />
     <%= link_to "Logout", destroy_person_session_path, :class => 'user-link' %>
     <%= link_to "Link my account with Facebook", person_omniauth_authorize_path(:facebook), :class => 'createacct-link facebook-auth' unless current_person.facebook_authenticated?%>
-    <%#link_to "hello","http://google.com", :class => 'hello'%>
   </p>
 </div>

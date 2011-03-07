@@ -54,6 +54,7 @@ group :development, :test do
   gem "rspec-rails", "~> 2.2.0"
   gem 'steak'
   gem "capybara", "~> 0.4.0"
+  gem 'webrat', "~> 0.7.3"
 end
 
 gem 'devise', '1.2.rc', :git => 'git://github.com/plataformatec/devise.git'
