@@ -34,6 +34,13 @@ class FacebookAuthPage
     visit_callback
     reset_stubs!
   end
+  
+  def click_connect_with_facebook
+    stub_omniauth
+    @page.click_link_or_button "Connect with Facebook"
+    visit_callback
+    reset_stubs!
+  end
 
   def stub_omniauth
     Devise::OmniAuth.short_circuit_authorizers!
@@ -42,6 +49,7 @@ class FacebookAuthPage
       b.get('/me?access_token=ccfaketoken') { [200, {}, FACEBOOK_INFO.to_json] }
     end
   end
+
 
   def visit_callback
     @page.visit '/people/auth/facebook/callback'

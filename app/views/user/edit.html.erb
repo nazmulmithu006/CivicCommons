@@ -40,6 +40,16 @@
           <%= person.password_field :password_confirmation, :class => 'textbox' %>
         </div>
        </fieldset>
+       <fieldset class="form-group">
+        <div class="form-block facebook-auth">
+          <%= person.label :Facebook, 'Facebook Connect' %>
+          <% if person.object.facebook_authenticated? %>
+            <%= link_to "Unlink Account", '' %>
+          <% else %>
+            <%= link_to("Connect with Facebook", person_omniauth_authorize_path(:facebook)) if current_person == person.object %>
+          <% end %>
+        </div>
+       </fieldset>
       <fieldset class="footer">
         <%= person.submit :class => 'submit', :value => 'Update Settings' %>
       </fieldset>

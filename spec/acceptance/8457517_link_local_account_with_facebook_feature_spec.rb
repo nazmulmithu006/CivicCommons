@@ -19,13 +19,17 @@ feature "8457517 link local account with facebook", %q{
     LoginPage.new(page)
   end
   
+  let :settings_page do
+    SettingsPage.new(page)
+  end
+  
   describe "When I have not linked my account to Facebook" do
     
     def given_a_registered_user
       @person = Factory.create(:registered_user)
     end
 
-    scenario "I should be able to link my account to facebook" do
+    scenario "I should be able to link my account to facebook from the 'link to facebook' link" do
       given_a_registered_user
       visit homepage
       login_page.sign_in(@person)
@@ -34,6 +38,19 @@ feature "8457517 link local account with facebook", %q{
       should_be_on homepage
       page.should have_content "John Doe"
       page.should_not have_link "Link my account with Facebook"
+    end
+    
+    scenario "I should be able to link my account to facebook from the 'accounts' page" do
+      given_a_registered_user
+      visit homepage
+      login_page.sign_in(@person)
+      settings_page.visit(@person)
+      should_be_on edit_user_path(@person)
+      page.should have_link 'Connect with Facebook'
+      facebook_auth_page.click_connect_with_facebook
+      settings_page.visit(@person)
+      page.should_not have_link 'Connect with Facebook'
+      page.should have_link "Unlink Account"
     end
 
   end
