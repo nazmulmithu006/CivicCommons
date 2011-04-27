@@ -263,11 +263,11 @@ ActiveRecord::Schema.define(:version => 20110607183415) do
     t.boolean  "marketable"
     t.datetime "marketable_at"
     t.text     "bio"
-    t.boolean  "daily_digest",                        :default => true,  :null => false
     t.boolean  "declined_fb_auth"
     t.string   "cached_slug"
     t.string   "twitter_username"
     t.string   "website"
+    t.boolean  "daily_digest",                        :default => true,  :null => false
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
@@ -336,6 +336,33 @@ ActiveRecord::Schema.define(:version => 20110607183415) do
   end
 
   add_index "subscriptions", ["person_id", "subscribable_type", "subscribable_id"], :name => "unique-subs", :unique => true
+
+  create_table "survey_options", :force => true do |t|
+    t.text     "title"
+    t.integer  "survey_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "description"
+    t.integer  "position"
+  end
+
+  create_table "survey_responses", :force => true do |t|
+    t.integer  "survey_option_id"
+    t.integer  "person_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.integer  "surveyable_id"
+    t.string   "surveyable_type"
+    t.string   "title"
+    t.text     "description"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "top_items", :force => true do |t|
     t.integer  "item_id"

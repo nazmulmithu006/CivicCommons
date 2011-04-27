@@ -1,12 +1,18 @@
 require 'spec_helper'
 
 describe Conversation do
-
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
-  end
-
+    context "has_one survey" do
+      it "should be correct" do
+        Conversation.reflect_on_association(:survey).macro.should == :has_one
+      end
+      it "should be polymorphic as surveyable" do
+        Conversation.reflect_on_association(:survey).options[:as].should == :surveyable
+      end
+    end
+  end  
   describe "a valid conversation" do
     before :each do
       @conversation = Factory.build(:conversation)

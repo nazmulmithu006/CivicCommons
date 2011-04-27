@@ -104,7 +104,17 @@ describe Issue do
       attributes[:name] = mi.name
       Issue.new(attributes).should_not be_valid
     end
+  end
 
+  context "associations" do
+    context "has_one survey" do
+      it "should be correct" do
+        Issue.reflect_on_association(:survey).macro.should == :has_one
+      end
+      it "should be polymorphic as surveyable" do
+        Issue.reflect_on_association(:survey).options[:as].should == :surveyable
+      end
+    end
   end
 
   context "Top Issues" do

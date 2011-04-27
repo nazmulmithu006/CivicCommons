@@ -18,7 +18,7 @@ class Conversation < ActiveRecord::Base
            :order => "contributions.created_at ASC"
 
   has_and_belongs_to_many :issues
-
+  has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
 
   attr_accessor :rejected_contributions
