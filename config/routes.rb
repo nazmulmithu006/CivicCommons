@@ -151,6 +151,7 @@ Civiccommons::Application.routes.draw do
     end
     get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
+    resources :surveys
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member

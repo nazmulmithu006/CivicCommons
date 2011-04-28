@@ -80,6 +80,12 @@
             %ul
               %li
                 =link_to "Add Static Page", new_admin_content_template_path
+          %li
+            =link_to "Surveys", admin_surveys_path
+            %ul
+              %li
+                =link_to "Add Survey", new_admin_survey_path
+    
       %div#main
         =yield
 

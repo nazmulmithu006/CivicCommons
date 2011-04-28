@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Surveyable:</b>
+  <%= @survey.surveyable_id %>
+</p>
+
+<p>
+  <b>Surveyable type:</b>
+  <%= @survey.surveyable_type %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @survey.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @survey.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_survey_path(@survey) %> |
+<%= link_to 'Back', admin_surveys_path %>
