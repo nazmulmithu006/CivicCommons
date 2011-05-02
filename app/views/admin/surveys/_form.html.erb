@@ -10,14 +10,13 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= f.label :surveyable_id %><br />
-    <%= f.text_field :surveyable_id %>
+    <%= f.label :surveyable_type, "surveyable_type" %><br />
+    <%= f.select :surveyable_type, SurveyOption::SURVEYABLE_TYPES, :prompt => 'select one...'%>
   </div>
   <div class="field">
-    <%= f.label :surveyable_type %><br />
-    <%= f.text_field :surveyable_type %>
+    <%= f.label :surveyable_id, "surveyable_id" %><br />
+    <%= f.text_field :surveyable_id %>
   </div>
   <div class="field">
     <%= f.label :title %><br />
@@ -27,6 +26,31 @@
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
+  <h2>Survey Options:</h2>
+  <%= f.fields_for :options do |option| %>
+    <div class = 'survey-option'>
+      <div class="field">
+        <%= option.label :title, 'Option Title' %><br />
+        <%= option.text_field :title %>
+      </div>
+      <div class="field">
+        <%= option.label :description, 'Option Description' %><br />
+        <%= option.text_area :description, :rows => 3, :cols => 50 %>
+      </div>
+      <div class="field">
+        <%= option.label :position, "Option Position" %><br />
+        <%= option.text_field :position %>
+      </div>
+      <% unless option.object.new_record? %>
+        <div class="field">
+          <%= option.label '_destroy', 'Delete' %><br />
+          <%= option.check_box '_destroy'%>
+        </div>
+      <% end %>
+      <%= option.hidden_field :nested %>
+    </div>
+  <% end %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

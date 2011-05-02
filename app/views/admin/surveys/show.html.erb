@@ -1,13 +1,14 @@
+<h1>Showing survey</h1>
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Surveyable:</b>
-  <%= @survey.surveyable_id %>
+  <b>Surveyable_type:</b>
+  <%= @survey.surveyable_type %>
 </p>
 
 <p>
-  <b>Surveyable type:</b>
-  <%= @survey.surveyable_type %>
+  <b>Surveyable_id:</b>
+  <%= @survey.surveyable_id %>
 </p>
 
 <p>
@@ -19,6 +20,25 @@
   <b>Description:</b>
   <%= @survey.description %>
 </p>
+
+<div class="survey-options">
+  <% @survey.options.position_sorted.each_with_index do |option, index| %>
+    <h2>Option <%= index+1 %></h2>
+    <p>
+      <b>Title:</b>
+      <%= option.title %>
+    </p>
+    <p>
+      <b>Description:</b>
+      <%= option.description %>
+    </p>
+    <p>
+      <b>Position:</b>
+      <%= option.position %>
+    </p>
+    
+  <% end %>
+</div>
 
 
 <%= link_to 'Edit', edit_admin_survey_path(@survey) %> |

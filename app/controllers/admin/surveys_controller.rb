@@ -25,6 +25,9 @@ class Admin::SurveysController < Admin::DashboardController
   # GET /admin/surveys/new.xml
   def new
     @survey = Survey.new
+    3.times do
+      @survey.options.build
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +38,8 @@ class Admin::SurveysController < Admin::DashboardController
   # GET /admin/surveys/1/edit
   def edit
     @survey = Survey.find(params[:id])
+    @survey.options.build
+    @survey_options = @survey.options
   end
 
   # POST /admin/surveys

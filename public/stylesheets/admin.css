@@ -243,3 +243,6 @@ textarea.tinymce{width:695px;}
  * see: http://forum.jquery.com/topic/jquery-ui-datepicker-initial-display-none-fixup
  * */
 #ui-datepicker-div { display: none; }
+.survey-option{
+  border-top: dotted 1px gray;
+}

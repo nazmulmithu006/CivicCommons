@@ -7,8 +7,16 @@ describe Survey do
         Survey.reflect_on_association(:options).macro.should == :has_many
       end
       
-      it "should have many options with the correct options" do
-        Survey.reflect_on_association(:options).options.should == {:class_name=>"SurveyOption", :foreign_key=>"survey_id", :dependent=>:destroy, :extend=>[]}
+      it "should have the class name as 'SurveyOption" do
+        Survey.reflect_on_association(:options).options[:class_name].should == "SurveyOption"
+      end
+      
+      it "should have foreign_key as 'survey_id" do
+        Survey.reflect_on_association(:options).options[:foreign_key].should == 'survey_id'        
+      end
+      
+      it "should destroy dependent when it is destroyed" do
+        Survey.reflect_on_association(:options).options[:dependent].should == :destroy
       end
     end
     
@@ -20,6 +28,17 @@ describe Survey do
       it "should be polymorphic " do
         Survey.reflect_on_association(:surveyable).options.should == {:polymorphic=>true, :foreign_type=>"surveyable_type"}
       end
+    end
+    
+    context "accepts_nested_attributes_for :options" do
+      it "should correctly create nested models" do
+        @survey = Factory.build(:survey)
+        @survey.options_attributes = [{:title => 'option title here', :description => 'option description here', :nested => true}]
+        @survey.save
+        @survey.should be_valid
+        SurveyOption.count.should == 1
+      end
+      
     end
   end
 
