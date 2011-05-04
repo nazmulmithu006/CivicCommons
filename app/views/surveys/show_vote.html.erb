@@ -1,0 +1,14 @@
+<% content_for(:main_body) do %>
+  <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable %>
+  <h2>Let's vote</h2>
+  <h3><%= @survey.title  %></h3>
+  <p><%= @survey.description %></p>
+
+  <div class="survey-options">
+    <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_options, :as => :option %>
+  </div>
+  <div class="selected-survey-options">
+    <h4>Ballot</h4>
+    <p>To vote, please drag and drop the options into this box</p>
+  </div>
+<% end %>
