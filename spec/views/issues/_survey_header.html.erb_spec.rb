@@ -6,6 +6,7 @@ describe '/issues/_survey_header.html.erb' do
       :name => 'Name here',
       :summary => 'Summary here'
     )
+    stub_template('subscriptions/_subscription.html.erb' => 'rendering subscription')
   end
   
   it "should show the Issue name" do
@@ -13,9 +14,9 @@ describe '/issues/_survey_header.html.erb' do
     rendered.should contain 'Name here'
   end
   
-  it "should show the Issue summary" do
+  it "should show the follow Issue button" do
     render
-    rendered.should contain 'Summary here'
+    rendered.should render_template 'subscriptions/_subscription'
   end
 
 end

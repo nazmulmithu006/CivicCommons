@@ -1,2 +1,16 @@
-<h1><%= @surveyable.name %></h1>
-<p><%= @surveyable.summary %></p>
+<div class="feature-mast">
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <h1><%= @surveyable.name %></h1>
+      </div>
+      <div class="aside supplementary">
+        <div id="subscription">
+          <p>
+          <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @surveyable} %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -391,9 +391,38 @@ margin: 0 0 20px 20px;
 div.three-col-sm div.photobank {margin: 0 0 0 -6px;}
 div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
+/*-----------------------------------------------
+=Survey Styles
+-----------------------------------------------*/
 
-/*- TABLE STYLES
-----------------------------------------------------------------------*/
+.survey-options{float: left; width: 50% }
+.survey-option .description{
+  display: none;
+  padding-top: 10px;
+}
+.survey-option{
+  border: 1px solid #CDCDCD; 
+  background-color: white;
+  margin: 10px 10px 0px 0px;
+  padding: 10px;
+  cursor: move;
+} 
+.selected-survey-options{
+  float:right; 
+  width: 49%;  
+}
+.selected-survey-options .sortable-wrapper{
+  border: 1px solid #CDCDCD; 
+  margin: 10px 0 10px 0px;
+  padding: 10px;
+}
+.selected-survey-options .sortable{
+  padding: 10px;
+}
+
+/*-----------------------------------------------
+=Table Styles
+-----------------------------------------------*/
 
 .data-table {
 margin-bottom: 30px;

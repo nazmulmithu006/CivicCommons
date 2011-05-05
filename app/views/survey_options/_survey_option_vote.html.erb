@@ -1,4 +1,8 @@
 <div class="survey-option">
-  <h4>Option <%= option_counter %>: <%= option.title %></h4>
-  <p><%= option.description %></p>
+  <div class = 'title'>
+    <h5><%= option.title %></h5>
+  </div>
+  <div class='description'>
+    <p><%= auto_link(option.description)  %></p>
+  </div>
 </div>

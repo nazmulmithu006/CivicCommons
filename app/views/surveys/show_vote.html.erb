@@ -1,14 +1,33 @@
+<% content_for(:header) do %>
+  <%= javascript_include_tag 'lib/surveys' %>
+<% end %>
 <% content_for(:main_body) do %>
   <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable %>
-  <h2>Let's vote</h2>
-  <h3><%= @survey.title  %></h3>
-  <p><%= @survey.description %></p>
-
-  <div class="survey-options">
-    <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_options, :as => :option %>
-  </div>
-  <div class="selected-survey-options">
-    <h4>Ballot</h4>
-    <p>To vote, please drag and drop the options into this box</p>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1>Vote on this Issue</h1>
+      <h2><%= @survey.title  %></h2>
+      <p><%= @survey.description %></p>
+      <h3>Let's Vote</h3>
+      <p>Drag and drop the options from the left into the ballot vote boxes on the right and order it for importance.</p>
+      <hr/>
+      <div class="survey-options">
+        <h4>Available Options</h4>
+        <div class="sortable">
+          <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_options, :as => :option %>
+        </div>
+      </div>
+      
+      <div class="selected-survey-options">
+        <h4>Ballot</h4>
+        <% @max_vote.times do |i| %>
+          <div class="sortable-wrapper">
+            <h5>Vote <%= i+1 %></h5>
+            <div class="sortable">
+            </div>
+          </div>
+        <% end %>  
+      </div>
+    </div>
   </div>
 <% end %>
