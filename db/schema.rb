@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110607183415) do
+ActiveRecord::Schema.define(:version => 20110505213921) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -315,6 +315,14 @@ ActiveRecord::Schema.define(:version => 20110607183415) do
 
   add_index "revision_records", ["revisionable_type", "revisionable_id", "revision"], :name => "revisionable", :unique => true
 
+  create_table "selected_survey_options", :force => true do |t|
+    t.integer  "survey_option_id"
+    t.integer  "survey_response_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "slugs", :force => true do |t|
     t.string   "name"
     t.integer  "sluggable_id"
@@ -347,11 +355,10 @@ ActiveRecord::Schema.define(:version => 20110607183415) do
   end
 
   create_table "survey_responses", :force => true do |t|
-    t.integer  "survey_option_id"
     t.integer  "person_id"
-    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "survey_id"
   end
 
   create_table "surveys", :force => true do |t|

@@ -6,14 +6,13 @@ describe SurveyOption do
       SurveyOption.reflect_on_association(:survey).macro.should == :belongs_to
     end
     
-    it "should has many responses" do
-      SurveyOption.reflect_on_association(:responses).macro.should == :has_many
+    it "should have many selected_survey_options" do
+      SurveyOption.reflect_on_association(:selected_survey_options).macro.should == :has_many
     end
     
-    it "should has_many responses with the correct options" do
-      SurveyOption.reflect_on_association(:responses).options.should == {:class_name=>"SurveyResponse", :foreign_key=>"survey_option_id", :extend=>[], :dependent => :destroy}
+    it "should destroy the selected_survey_options" do
+      SurveyOption.reflect_on_association(:selected_survey_options).options[:dependent].should == :destroy
     end
-    
   end
 
   context "Validations" do
