@@ -18,6 +18,7 @@ describe "admin/surveys/new.html.erb" do
       form.should have_selector("select#survey_surveyable_type", :name => "survey[surveyable_type]")
       form.should have_selector("input#survey_title", :name => "survey[title]")
       form.should have_selector("textarea#survey_description", :name => "survey[description]")
+      form.should have_selector("input#survey_max_selected_options", :name => "survey[max_selected_options]")
       
       #survey options
       form.should have_selector("input#survey_options_attributes_0_title", :name => "survey[options_attributes][0][title]")

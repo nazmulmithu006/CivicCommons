@@ -4,6 +4,7 @@ class SurveysController < ApplicationController
   before_filter :require_survey
   
   def show
+    @max_vote = @survey.max_selected_options
     @survey_options = @survey.options.position_sorted
     render :template => "surveys/show_#{params[:type]}"
   end

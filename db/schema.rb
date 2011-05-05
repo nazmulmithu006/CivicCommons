@@ -362,6 +362,7 @@ ActiveRecord::Schema.define(:version => 20110607183415) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "max_selected_options", :default => 0
   end
 
   create_table "top_items", :force => true do |t|

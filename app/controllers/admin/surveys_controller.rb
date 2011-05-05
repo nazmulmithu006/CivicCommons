@@ -24,7 +24,7 @@ class Admin::SurveysController < Admin::DashboardController
   # GET /admin/surveys/new
   # GET /admin/surveys/new.xml
   def new
-    @survey = Survey.new
+    @survey = Survey.new(:max_selected_options => 3)
     3.times do
       @survey.options.build
     end
