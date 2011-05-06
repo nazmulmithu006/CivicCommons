@@ -21,6 +21,11 @@
   <%= @survey.description %>
 </p>
 
+<p>
+  <b>Max Selected Options:</b>
+  <%= @survey.max_selected_options %>
+</p>
+
 <div class="survey-options">
   <% @survey.options.position_sorted.each_with_index do |option, index| %>
     <h2>Option <%= index+1 %></h2>

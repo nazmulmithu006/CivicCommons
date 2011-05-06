@@ -6,7 +6,8 @@ describe "admin/surveys/show.html.erb" do
       :surveyable_id => 1,
       :surveyable_type => "Surveyable Type",
       :title => "Title",
-      :description => "MyText"
+      :description => "MyText",
+      :max_selected_options => 5
     ))
     @survey.stub_chain(:options, :position_sorted).and_return([stub_model(SurveyOption, :title => 'myOptionTitle', :description => 'myOptionDescription',:position => 123 )])
   end
@@ -20,5 +21,6 @@ describe "admin/surveys/show.html.erb" do
     rendered.should match(/myOptionTitle/)
     rendered.should match(/myOptionDescription/)
     rendered.should match(/123/)
+    rendered.should match(/5/)
   end
 end
