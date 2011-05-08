@@ -40,6 +40,11 @@ describe Survey do
       end
       
     end
+    
+    it "should have many survey_responses" do
+      Person.reflect_on_association(:survey_responses).macro == :has_many
+    end
+    
   end
 
   context "Validations" do

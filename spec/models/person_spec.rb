@@ -14,6 +14,9 @@ describe Person do
     it "should has_many Authentications" do
       Person.reflect_on_association(:authentications).macro == :has_many
     end
+    it "should have many survey_responses" do
+      Person.reflect_on_association(:survey_responses).macro == :has_many
+    end
   end
 
   describe "validate required data" do

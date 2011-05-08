@@ -9,6 +9,10 @@ describe SurveyResponse do
     it "should belong to person" do
       SurveyResponse.reflect_on_association(:person).macro.should == :belongs_to
     end
+    
+    it "should belong_to survey" do
+      SurveyResponse.reflect_on_association(:survey).macro.should == :belongs_to
+    end
   end
 
   context "Validations" do
