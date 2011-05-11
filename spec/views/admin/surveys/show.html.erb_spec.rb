@@ -5,6 +5,7 @@ describe "admin/surveys/show.html.erb" do
     @survey = assign(:survey, stub_model(Survey,
       :surveyable_id => 1,
       :surveyable_type => "Surveyable Type",
+      :type => 'classType',
       :title => "Title",
       :description => "MyText",
       :max_selected_options => 5
@@ -18,6 +19,7 @@ describe "admin/surveys/show.html.erb" do
     rendered.should match(/Surveyable Type/)
     rendered.should match(/Title/)
     rendered.should match(/MyText/)
+    rendered.should match(/classType/)
     rendered.should match(/myOptionTitle/)
     rendered.should match(/myOptionDescription/)
     rendered.should match(/123/)

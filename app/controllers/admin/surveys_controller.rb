@@ -25,6 +25,7 @@ class Admin::SurveysController < Admin::DashboardController
   # GET /admin/surveys/new.xml
   def new
     @survey = Survey.new(:max_selected_options => 3)
+    @survey.type = 'Vote'
     3.times do
       @survey.options.build
     end
@@ -46,6 +47,7 @@ class Admin::SurveysController < Admin::DashboardController
   # POST /admin/surveys.xml
   def create
     @survey = Survey.new(params[:survey])
+    @survey.type = params["survey"]["type"]
 
     respond_to do |format|
       if @survey.save

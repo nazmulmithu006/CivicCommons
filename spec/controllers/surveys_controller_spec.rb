@@ -7,7 +7,7 @@ describe SurveysController do
   end
   
   def mock_survey(stubs={})
-    @mock_survey ||= mock_model(Survey, stubs).as_null_object
+    @mock_survey ||= mock_model(Vote,stubs).as_null_object
   end
   
   def mock_issue(stubs={})
@@ -31,13 +31,13 @@ describe SurveysController do
     end
     
     it "should render the show_vote template if it is a 'vote'" do
-      get :show, :issue_id => 123, :type => 'vote'
+      get :show, :issue_id => 123
       response.should render_template('surveys/show_vote')
     end
     
     it "should show select the correc survey options" do
       @mock_survey.stub_chain(:options,:position_sorted).and_return([@option1,@option2])
-      get :show, :issue_id => 123, :type => 'vote'
+      get :show, :issue_id => 123
       assigns(:survey_options).should == [@option1, @option2]
     end
   end
@@ -48,19 +48,21 @@ describe SurveysController do
     end
     
     it "should redirect to the surveyable model if survey record is not found" do
-      get :show, :issue_id => 123, :type => 'vote'
+      get :show, :issue_id => 123
       response.should redirect_to @mock_issue
     end
   end
   
   describe "find_surveyable" do
     it "should return the Issue model if issue_id is passed" do
-      Issue.should_receive(:find).and_return(mock_issue)
-      get :show, :issue_id => 123, :type => 'vote'
+      @surveyable = mock_issue(:survey => mock_survey())
+      Issue.should_receive(:find).and_return(@surveyable)
+      get :show, :issue_id => 123
     end
     it "should return the Conversation model if conversation_id is passed" do
-      Conversation.should_receive(:find).and_return(mock_conversation)
-      get :show, :conversation_id => 123, :type => 'vote'
+      @surveyable = mock_conversation(:survey => mock_survey())
+      Conversation.should_receive(:find).and_return(@surveyable)
+      get :show, :conversation_id => 123
     end
   end
 

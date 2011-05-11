@@ -56,4 +56,13 @@ describe Survey do
       @survey.errors[:surveyable_type].should == ["can't be blank"]
     end
   end
+  
+  context "Single Table Inheritance" do
+    it "can be a Vote" do
+      Vote.superclass.should == Survey
+    end
+    it "can be a Poll" do
+      Poll.superclass.should == Survey
+    end
+  end
 end

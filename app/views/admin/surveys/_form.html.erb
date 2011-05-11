@@ -11,6 +11,11 @@
     </div>
   <% end %>
   <div class="field">
+    <%= f.label :type, "Survey Type(Vote or Poll)" %><br />
+    <%= f.select :type, Survey::SURVEY_TYPES, :prompt => 'select one...'%>
+  </div>
+  
+  <div class="field">
     <%= f.label :surveyable_type, "surveyable_type" %><br />
     <%= f.select :surveyable_type, SurveyOption::SURVEYABLE_TYPES, :prompt => 'select one...'%>
   </div>

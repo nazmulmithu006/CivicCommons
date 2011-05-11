@@ -32,6 +32,12 @@ describe Admin::SurveysController do
       get :new
       assigns(:survey).should be(mock_survey)
     end
+    it "should defult to Vote, as a Survey STI" do
+      @survey = mock_survey
+      Survey.stub(:new).and_return(@survey)
+      @survey.should_receive('type=').and_return('Vote')
+      get :new
+    end
   end
 
   describe "GET edit" do
@@ -48,6 +54,13 @@ describe Admin::SurveysController do
         Survey.stub(:new).with({'these' => 'params'}) { mock_survey(:save => true) }
         post :create, :survey => {'these' => 'params'}
         assigns(:survey).should be(mock_survey)
+      end
+      
+      it "should create an STI model based on type" do
+        @survey = mock_survey(:save => true,:type => 'Vote')
+        Survey.stub(:new).with({'these' => 'params'}).and_return(@survey)
+        @survey.should_receive('type=').and_return('Vote')
+        post :create, :survey => {'these' => 'params'}
       end
 
       it "redirects to the created survey" do

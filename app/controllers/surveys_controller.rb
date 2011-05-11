@@ -6,7 +6,8 @@ class SurveysController < ApplicationController
   def show
     @max_vote = @survey.max_selected_options
     @survey_options = @survey.options.position_sorted
-    render :template => "surveys/show_#{params[:type]}"
+    @survey_response = current_person.survey_responses.find_or_initialize_by_survey_id(@survey.id)
+    render :template => "surveys/show_#{@survey.class.name.underscore}"
   end
   
 protected  
@@ -22,7 +23,7 @@ protected
   
   def require_survey
     if @survey.blank?
-      flash[:notice] = "#{params[:type].titlecase} Not found"
+      flash[:notice] = "#{@survey.class.name.titlecase} Not found"
       redirect_to @surveyable 
       return false
     end
