@@ -26,6 +26,7 @@ class Admin::SurveysController < Admin::DashboardController
   def new
     @survey = Survey.new(:max_selected_options => 3)
     @survey.type = 'Vote'
+    @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
     3.times do
       @survey.options.build
     end
@@ -39,6 +40,7 @@ class Admin::SurveysController < Admin::DashboardController
   # GET /admin/surveys/1/edit
   def edit
     @survey = Survey.find(params[:id])
+    @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
     @survey.options.build
     @survey_options = @survey.options
   end

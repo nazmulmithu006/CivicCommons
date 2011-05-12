@@ -27,7 +27,7 @@ describe SelectedSurveyOption do
       it "should throw validation error if a selected survey option is created on the same position, survey option, and survey response" do
         @selected_survey_option1 = SelectedSurveyOption.create(:position => 123, :survey_option_id => 123, :survey_response_id => 123)
         @selected_survey_option2 = SelectedSurveyOption.create(:position => 123, :survey_option_id => 123, :survey_response_id => 123)
-        @selected_survey_option2.errors[:survey_option_id].should == ["has already been chosen by you"]
+        @selected_survey_option2.errors[:survey_option_id].should == ["has already been selected"]
       end
     end
   end

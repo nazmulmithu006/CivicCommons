@@ -4,13 +4,20 @@ class SurveysController < ApplicationController
   before_filter :require_survey
   
   def show
-    @max_vote = @survey.max_selected_options
-    @survey_options = @survey.options.position_sorted
-    @survey_response = current_person.survey_responses.find_or_initialize_by_survey_id(@survey.id)
+    @survey_response_presenter = VoteResponsePresenter.new(:person_id => current_person.id, :survey_id => @survey.id)
     render :template => "surveys/show_#{@survey.class.name.underscore}"
   end
   
-protected  
+  def create_response
+    @survey_response_presenter = VoteResponsePresenter.new({:person_id => current_person.id, :survey_id => @survey.id}.merge!(params[:survey_response_presenter]))
+    if @survey_response_presenter.save
+      redirect_to :action => :show
+    else
+      render :template => "surveys/show_#{@survey.class.name.underscore}"
+    end
+  end
+  
+protected
 
   def find_surveyable
     if !params[:issue_id].blank?

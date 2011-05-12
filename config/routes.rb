@@ -113,14 +113,17 @@ Civiccommons::Application.routes.draw do
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
     resources :pages, controller: :managed_issue_pages, only: [:show]
-    resource :vote, controller: :surveys
+    resource :vote, controller: :surveys do
+      post 'create_response', on: :member
+    end
   end
 
   resources :conversations, only: [:index, :show, :new, :create] do
-    resource :vote, controller: :surveys
     resources :contributions, only: [:edit, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
+    resource :vote, controller: :surveys do
+      post 'create_response', on: :member
     end
   end
 
@@ -134,7 +137,6 @@ Civiccommons::Application.routes.draw do
   resources :content, only: [:index, :show]
   resources :news, only: [:index]
   resources :radioshow, only: [:index, :show]
-
 #Namespaces
   namespace "admin" do
     root      to: "dashboard#show"

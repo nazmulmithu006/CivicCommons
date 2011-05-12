@@ -2,13 +2,14 @@ require 'spec_helper'
 
 describe "admin/surveys/edit.html.erb" do
   before(:each) do
+    @survey_option = stub_model(SurveyOption)
     @survey = assign(:survey, stub_model(Survey,
       :surveyable_id => 1,
       :surveyable_type => "MyString",
       :title => "MyString",
       :type => 'classType',
       :description => "MyText",
-      :options => [stub_model(SurveyOption)]
+      :options => [@survey_option]
     ))
   end
 
