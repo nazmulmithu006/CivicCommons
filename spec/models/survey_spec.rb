@@ -41,8 +41,14 @@ describe Survey do
       
     end
     
-    it "should have many survey_responses" do
-      Person.reflect_on_association(:survey_responses).macro == :has_many
+    context "has_many survey_responses" do
+      it "should have many survey_responses" do
+        Survey.reflect_on_association(:survey_responses).macro == :has_many
+      end
+      
+      it "should not destroy this object if it has dependencies" do
+        Survey.reflect_on_association(:survey_responses).options[:dependent].should == :restrict
+      end
     end
     
   end
