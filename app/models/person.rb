@@ -54,7 +54,6 @@ class Person < ActiveRecord::Base
   has_many :rating_groups, :dependent => :restrict
   has_many :subscriptions, :dependent => :destroy
   has_many :survey_responses
-  has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict 
