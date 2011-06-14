@@ -26,14 +26,18 @@ jQuery(function ($) {
       $(this).hide();
       return false;
     });
+    
     $('.survey-options .sortable').sortable({ 
       connectWith: '.selected-survey-options .sortable',
-      cursor: 'crosshair'
+      cursor: 'crosshair',
+      placeholder: "survey-option-placeholder"
     });
+    
     $('.selected-survey-options .sortable').sortable({ 
       connectWith: '.survey-options .sortable, .selected-survey-options .sortable',
       update: updateSelectedOptionID,
-      receive: receivingItem
+      receive: receivingItem,
+      placeholder: "survey-option-placeholder"
     });
     
   });

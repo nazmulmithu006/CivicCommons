@@ -406,7 +406,17 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   margin: 10px 10px 0px 0px;
   padding: 10px;
   cursor: move;
-} 
+}
+.survey-option-placeholder{
+  border: 1px solid #CDCDCD;
+  height: 3em; 
+  line-height: 1.2em; 
+}
+
+.survey-options .sortable{
+  min-height: 15em;
+}
+ 
 .selected-survey-options{
   float:right; 
   width: 49%;  
