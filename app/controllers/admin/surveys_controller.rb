@@ -41,7 +41,10 @@ class Admin::SurveysController < Admin::DashboardController
   def edit
     @survey = Survey.find(params[:id])
     @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
-    @survey.options.build
+    3.times do
+      @survey.options.build
+    end
+    
     @survey_options = @survey.options
   end
 
