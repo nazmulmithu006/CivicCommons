@@ -16,21 +16,24 @@
   </div>
   
   <div class="field">
-    <%= f.label :surveyable_type, "surveyable_type" %><br />
-    <%= f.select :surveyable_type, SurveyOption::SURVEYABLE_TYPES, :prompt => 'select one...'%>
-  </div>
-  <div class="field">
-    <%= f.label :surveyable_id, "surveyable_id" %><br />
-    <%= f.text_field :surveyable_id %>
-  </div>
-  <div class="field">
-    <%= f.label :title %><br />
+    <%= f.label :title, 'title *' %><br />
     <%= f.text_field :title %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
+  
+  <div class="field">
+    <%= f.label :surveyable_type, "surveyable_type(Optional)" %><br />
+    <%= f.select :surveyable_type, SurveyOption::SURVEYABLE_TYPES, :prompt => 'select one...', :include_blank => true%>
+  </div>
+  <div class="field">
+    <%= f.label :surveyable_id, "surveyable_id(Optional)" %><br />
+    <%= f.text_field :surveyable_id %>
+  </div>
+  
+  
   <div class="field">
     <%= f.label :max_selected_options %><br />
     <%= f.text_field :max_selected_options %>

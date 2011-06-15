@@ -126,8 +126,13 @@ Civiccommons::Application.routes.draw do
       post 'create_response', on: :member
     end
   end
-
+  
   resources :contributions, only: [:destroy]
+  
+  resources :votes, controller: :surveys, :only => :show do
+    post 'create_response', on: :member
+  end
+  
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]

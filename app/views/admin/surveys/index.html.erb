@@ -12,7 +12,7 @@
 
 <% @surveys.each do |survey| %>
   <tr>
-    <td><%= link_to "#{survey.surveyable_type}-#{survey.surveyable_id}", survey.surveyable %></td>
+    <td><%= link_to("#{survey.surveyable_type}-#{survey.surveyable_id}", survey.surveyable) unless survey.surveyable_type.blank? %></td>
     <td><%= survey.surveyable_type %></td>
     <td><%= survey.title %></td>
     <td><%= survey.description %></td>

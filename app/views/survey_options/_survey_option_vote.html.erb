@@ -1,7 +1,7 @@
 <div class="survey-option" data-option-id="<%= option.id %>">
   <div class = 'title'>
     <h5><%= option.title %></h5>
-    <div class="menu"><%= link_to "more...", '#', :class => 'expand' %></div>
+    <div class="menu"><%= link_to "more...", '#', :class => 'expand' unless option.description.blank?%></div>
   </div>
   <div class='description'>
     <p><%= auto_link(option.description)  %></p>

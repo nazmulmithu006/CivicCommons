@@ -1,18 +1,8 @@
 <h1>Showing survey</h1>
 <p id="notice"><%= notice %></p>
-  <p>
-    <b>Survey Type(Vote or Poll):</b>
-    <%= @survey.type %>
-  </p>
-
 <p>
-  <b>Surveyable_type:</b>
-  <%= @survey.surveyable_type %>
-</p>
-
-<p>
-  <b>Surveyable_id:</b>
-  <%= @survey.surveyable_id %>
+  <b>Survey Type(Vote or Poll):</b>
+  <%= @survey.type %>
 </p>
 
 <p>
@@ -24,6 +14,17 @@
   <b>Description:</b>
   <%= @survey.description %>
 </p>
+
+<p>
+  <b>Surveyable_type:</b>
+  <%= @survey.surveyable_type %>
+</p>
+
+<p>
+  <b>Surveyable_id:</b>
+  <%= @survey.surveyable_id %>
+</p>
+
 
 <p>
   <b>Max Selected Options:</b>

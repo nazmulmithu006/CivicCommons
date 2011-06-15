@@ -57,9 +57,9 @@ describe Survey do
     before(:each) do
       @survey = Survey.create
     end
-    it "should validate presence of surveyable" do
-      @survey.errors[:surveyable_id].should == ["can't be blank"]
-      @survey.errors[:surveyable_type].should == ["can't be blank"]
+    it "should NOT validate presence of surveyable" do
+      @survey.errors[:surveyable_id].should be_blank
+      @survey.errors[:surveyable_type].should be_blank
     end
   end
   

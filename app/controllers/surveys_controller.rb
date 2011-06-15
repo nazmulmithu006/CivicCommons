@@ -22,10 +22,14 @@ protected
   def find_surveyable
     if !params[:issue_id].blank?
       @surveyable = Issue.find(params[:issue_id])
+      @survey = @surveyable.survey
     elsif !params[:conversation_id].blank?
       @surveyable = Conversation.find(params[:conversation_id])
+      @survey = @surveyable.survey
+    else
+      @survey = Survey.find(params[:id])
     end
-    @survey = @surveyable.survey
+    
   end
   
   def require_survey
