@@ -13,15 +13,7 @@ class VotePage < PageObject
   
   def drag_from_to(from_locator, to_locator)
     script ="
-      //taken from surveys.js
-      function updateOptionID(selector){
-        var value = '';
-        var $input = $(selector).find('input.selected_option_id')[0];
-        var $selected_option = $(selector).find('.survey-option')[0];
-        if($selected_option){ value = $($selected_option).data('option-id');}    
-        $($input).val(value);
-      }
-      
+      //taken from surveys.js 
       var $from = $('.survey-options .sortable .survey-option').first().remove();
       var $to = $('.selected-survey-options .sortable').first()
       $to.append($from);
