@@ -122,6 +122,7 @@ Civiccommons::Application.routes.draw do
     resources :contributions, only: [:edit, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
+    end
     resource :vote, controller: :surveys do
       post 'create_response', on: :member
     end
@@ -153,7 +154,7 @@ Civiccommons::Application.routes.draw do
       put 'toggle_staff_pick', on: :member
       put 'update_order', on: :collection
     end
-    resources :issues, do
+    resources :issues do
       resources :pages, controller: :managed_issue_pages
       put 'update_order', on: :collection
     end
