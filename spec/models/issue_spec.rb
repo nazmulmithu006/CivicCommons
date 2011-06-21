@@ -107,14 +107,46 @@ describe Issue do
   end
 
   context "associations" do
-    context "has_one survey" do
+    context "has_many surveys" do
+      def given_an_issue_with_many_surveys
+        @issue = Factory.create(:issue)
+        @survey1 = Factory.create(:survey,:surveyable_id => @issue.id, :surveyable_type => @issue.class.name)
+        @survey2 = Factory.create(:survey,:surveyable_id => @issue.id, :surveyable_type => @issue.class.name)
+      end
       it "should be correct" do
-        Issue.reflect_on_association(:survey).macro.should == :has_one
+        Issue.reflect_on_association(:surveys).macro.should == :has_many
       end
       it "should be polymorphic as surveyable" do
-        Issue.reflect_on_association(:survey).options[:as].should == :surveyable
+        Issue.reflect_on_association(:surveys).options[:as].should == :surveyable
+      end
+      it "should correctly have many surveys" do
+        given_an_issue_with_many_surveys
+        @issue.surveys.should == [@survey1, @survey2]
       end
     end
+    context "has_many votes" do
+      def given_an_issue_with_many_votes
+        @issue = Factory.create(:issue)
+        @survey1 = Factory.create(:survey,:surveyable_id => @issue.id, :surveyable_type => @issue.class.name)
+        @vote1 = Factory.create(:vote,:surveyable_id => @issue.id, :surveyable_type => @issue.class.name)
+        @vote2 = Factory.create(:vote,:surveyable_id => @issue.id, :surveyable_type => @issue.class.name)
+      end
+      it "should be correct" do
+        Issue.reflect_on_association(:votes).macro.should == :has_many
+      end
+      it "should be polymorphic as surveyable" do
+        Issue.reflect_on_association(:votes).options[:as].should == :surveyable
+      end
+      it "should correctly have many votes" do
+        given_an_issue_with_many_votes
+        @issue.votes.should == [@vote1, @vote2]
+      end
+      it "should have 2 votes" do
+        given_an_issue_with_many_votes
+        @issue.votes.count.should == 2
+      end
+    end
+    
   end
 
   context "Top Issues" do
