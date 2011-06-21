@@ -289,17 +289,18 @@ module CCML
     begin
       clazz = "CCML::Tag::#{clazz.camelize}Tag"
       tag = clazz.constantize.new(opts, url)
-    rescue => e
+    rescue NameError
       raise CCML::Error::TagClassNotFoundError, "Unable to initialize object for '#{clazz}' tag."
     end
     return tag
   end
 
   def CCML.run_tag_method(tag, method)
-    sub = tag.send(method.to_sym)
-    return sub
-  rescue => e
-    raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
+    if tag.respond_to?(method.to_sym)
+      sub = tag.send(method.to_sym)
+    else
+      raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
+    end
   end
 
   def CCML.parse_options(match)
