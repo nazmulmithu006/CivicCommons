@@ -46,7 +46,8 @@ feature "Voting system", %q{
     login_page.sign_in(@person)
     
     # And I visit the vote page on the issue
-    vote_page.visit_vote_on_an_issue(@issue)
+    # vote_page.visit_vote_on_an_issue(@issue)
+    vote_page.visit_an_independent_vote(@survey)
     
     # I should see 3 options available to be selected
     vote_page.should have_selector(VotePage::OPTIONS_LOCATOR, :count => 3)

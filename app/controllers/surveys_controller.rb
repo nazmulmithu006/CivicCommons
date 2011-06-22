@@ -1,7 +1,6 @@
 class SurveysController < ApplicationController
   before_filter :require_user
-  before_filter :find_surveyable
-  before_filter :require_survey
+  before_filter :find_survey
   
   def show
     @survey_response_presenter = VoteResponsePresenter.new(:person_id => current_person.id, :survey_id => @survey.id)
@@ -19,25 +18,8 @@ class SurveysController < ApplicationController
   
 protected
 
-  def find_surveyable
-    if !params[:issue_id].blank?
-      @surveyable = Issue.find(params[:issue_id])
-      @survey = @surveyable.survey
-    elsif !params[:conversation_id].blank?
-      @surveyable = Conversation.find(params[:conversation_id])
-      @survey = @surveyable.survey
-    else
+  def find_survey
       @survey = Survey.find(params[:id])
-    end
-    
-  end
-  
-  def require_survey
-    if @survey.blank?
-      flash[:notice] = "#{@survey.class.name.titlecase} Not found"
-      redirect_to @surveyable 
-      return false
-    end
   end
   
 end

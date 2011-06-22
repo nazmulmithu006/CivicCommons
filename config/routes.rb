@@ -113,18 +113,12 @@ Civiccommons::Application.routes.draw do
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
     resources :pages, controller: :managed_issue_pages, only: [:show]
-    resource :vote, controller: :surveys do
-      post 'create_response', on: :member
-    end
   end
 
   resources :conversations, only: [:index, :show, :new, :create] do
     resources :contributions, only: [:edit, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
-    end
-    resource :vote, controller: :surveys do
-      post 'create_response', on: :member
     end
   end
   
@@ -133,6 +127,7 @@ Civiccommons::Application.routes.draw do
   resources :votes, controller: :surveys, :only => :show do
     post 'create_response', on: :member
   end
+  
   
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]

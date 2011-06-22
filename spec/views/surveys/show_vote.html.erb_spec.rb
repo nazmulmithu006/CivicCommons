@@ -7,7 +7,7 @@ describe '/surveys/show_vote.html.erb' do
   
   before(:each) do
     @surveyable = stub_model(Issue)
-    @survey = stub_model(Survey, :type => 'vote', :surveyable => @surveyable)
+    @survey = stub_model(Vote, :surveyable => @surveyable)
     @survey_options = [stub_model(SurveyOption)]
     @person = stub_model(Person)
     @survey_response_presenter = stub("VoteResponsePresenter", 

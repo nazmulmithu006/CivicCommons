@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Surveyable</th>
+    <th>Surveyable(Type-id)</th>
     <th>Title</th>
     <th>Description</th>
     <th></th>
@@ -12,8 +12,7 @@
 
 <% @surveys.each do |survey| %>
   <tr>
-    <td><%= link_to("#{survey.surveyable_type}-#{survey.surveyable_id}", survey.surveyable) unless survey.surveyable_type.blank? %></td>
-    <td><%= survey.surveyable_type %></td>
+    <td><%= "#{survey.surveyable_type}-#{survey.surveyable_id}"  %></td>
     <td><%= survey.title %></td>
     <td><%= survey.description %></td>
     <td><%= link_to 'Show', admin_survey_path(survey) %></td>

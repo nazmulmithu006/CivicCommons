@@ -18,7 +18,7 @@
       </div>
       
       <div class="selected-survey-options">
-        <% form_for :survey_response_presenter, @survey_response_presenter, :url => !@survey.surveyable_type.blank? ? polymorphic_url([:create_response, @survey.surveyable, :vote]) : polymorphic_url([:create_response, @survey])  do |f| %>
+        <% form_for :survey_response_presenter, @survey_response_presenter, :url => polymorphic_url([:create_response, @survey])  do |f| %>
           <h4>Ballot</h4>
           <% if @survey_response_presenter.errors.any? %>
             <h3>Errors saving this vote</h3>
