@@ -125,6 +125,25 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
       return nil
     end
   end
+  
+  # 'vote_band' method with no opts grabs issue id from segment_1
+  #
+  # {ccml:issue:vote_band id='<id or cached-slug or segment>'}
+  # {ccml:issue:vote_band id='<id or cached-slug or segment>' limit='2'}{/ccml:issue:conversation_band}
+  def vote_band
+    issue = get_issue
+    if issue
+      limit = @opts[:limit].to_i
+      if limit > 0
+        votes = issue.votes.slice(0, limit)
+      else
+        votes = issue.votes
+      end
+      return @renderer.render :partial => '/surveys/vote_band', :locals => {:votes => votes}
+    else
+      return nil
+    end
+  end
 
   def convo_band
     return conversation_band
