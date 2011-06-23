@@ -1,14 +1,13 @@
 <% if votes %>
-  <% votes.each_slice(3) do |vote_mini_array|%>
-    <div class="three-col-sm">
-      <% vote_mini_array.each do |vote| %>
-        <div class="cols">
+    <ul>
+      <% votes.each do |vote| %>
+        <li>
           <a href="<%= vote_path(vote)%>">
-            <h4><%= truncate(vote.title, {:length => 45, :separator => ' '}) %></h4>
+            <h4><%= vote.title %></h4>
+            <%= vote.description %>
             <%= simple_format(truncate(Sanitize.clean(vote.description), {:length => 125, :separator => ' '})) %>
           </a>
-        </div>
+        </li>
       <% end %>
-    </div>
-  <% end %>
+    </ul>
 <% end %>
