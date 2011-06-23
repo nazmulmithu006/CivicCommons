@@ -144,7 +144,6 @@ describe CCML::Tag::IssueTag do
       @vote1 = Factory.create(:vote, :title => 'Vote1title', :surveyable_type => @issue.class.name, :surveyable_id => @issue.id)
       @vote2 = Factory.create(:vote, :title => 'Vote2title', :surveyable_type => @issue.class.name, :surveyable_id => @issue.id)
       @url = "http://www.theciviccommons.com/issues/#{@issue.cached_slug}"
-      @tag_regexp = Regexp.new("#{@issue.id} \"#{@issue.name}\" #{@issue.cached_slug}")
       @vote_title1 = Regexp.new(@vote1.title)
       @vote_title2 = Regexp.new(@vote2.title)
     end
