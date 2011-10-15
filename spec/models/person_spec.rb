@@ -550,4 +550,35 @@ describe Person do
     @person.unsubscribe_from_daily_digest
     @person.should_not be_subscribed_to_daily_digest
   end
+  
+  context "paperclip" do
+    
+    it "will have necessary db columns for paperclip" do
+      should have_db_column(:avatar_file_name).of_type(:string)
+      should have_db_column(:avatar_content_type).of_type(:string)
+      should have_db_column(:avatar_file_size).of_type(:integer)
+    end
+
+    it "will only allow image attachments" do
+      # allowed image mimetypes are based on what we have seen in production
+      should validate_attachment_content_type(:avatar).
+        allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
+        rejecting('text/plain', 'text/xml')
+    end
+    
+    it "will have an existing default image" do
+      paperclip_default_file_exists?('original').should be_true
+      Person.attachment_definitions[:avatar][:styles].each do |style, size|
+        paperclip_default_file_exists?(style.to_s).should be_true
+      end
+    end
+
+    def paperclip_default_file_exists?(style)
+      default_url = Person.attachment_definitions[:avatar][:default_url].gsub(/\:style/, style)
+      default_file = File.join(Rails.root, 'public', default_url)
+      File.exist?(default_file)
+    end
+    
+  end
+  
 end

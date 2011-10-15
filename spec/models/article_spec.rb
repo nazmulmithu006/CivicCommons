@@ -14,7 +14,12 @@ describe Article do
       should have_db_column(:image_content_type).of_type(:string)
       should have_db_column(:image_file_size).of_type(:integer)
     end
+    it "should not have validation for content type" do
+      should_not validate_attachment_content_type(:image)
+    end
+    it "should not have default image" do
+      Article.attachment_definitions[:image][:default_url].should be_nil
+    end
   end
-  
 
 end

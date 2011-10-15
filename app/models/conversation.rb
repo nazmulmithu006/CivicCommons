@@ -38,7 +38,9 @@ class Conversation < ActiveRecord::Base
     :s3_credentials => S3Config.credential_file,
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
-
+  validates_attachment_content_type :image,
+                                    :content_type => /image\/*/,
+                                    :message => "Not a valid image file."
   validates :owner, :must_be_logged_in => true
   validates_length_of :contributions, :is => 1, :on => :create, :if => :from_community?,
     :message => "Please get the ball rolling with the first comment, question, or contribution of some sort."

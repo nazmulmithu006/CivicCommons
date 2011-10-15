@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe Conversation do
   context "Associations" do
     it { should have_many :contributions  }
@@ -350,7 +351,8 @@ describe Conversation do
   end
 
   describe "conversations with exclude_from_most_recent" do
-    before(:all) do
+    before(:each) do
+      # stub_amazon_s3_request
       @conversation = Factory.create(:conversation)
       @excluded_conversation = Factory.create(:conversation, { exclude_from_most_recent: true })
     end
@@ -362,10 +364,31 @@ describe Conversation do
   end
   
   context "paperclip" do
+    
     it "will have necessary db columns for paperclip" do
       should have_db_column(:image_file_name).of_type(:string)
       should have_db_column(:image_content_type).of_type(:string)
       should have_db_column(:image_file_size).of_type(:integer)
+    end
+    
+    it "will only allow image attachments" do
+      # allowed image mimetypes are based on what we have seen in production
+      should validate_attachment_content_type(:image).
+        allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
+        rejecting('text/plain', 'text/xml')
+    end
+
+    it "will have an existing default image" do
+      paperclip_default_file_exists?('original').should be_true
+      Conversation.attachment_definitions[:image][:styles].each do |style, size|
+        paperclip_default_file_exists?(style.to_s).should be_true
+      end
+    end
+    
+    def paperclip_default_file_exists?(style)
+      default_url = Conversation.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
+      default_file = File.join(Rails.root, 'public', default_url)
+      File.exist?(default_file)
     end
   end
   

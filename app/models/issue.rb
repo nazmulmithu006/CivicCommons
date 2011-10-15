@@ -38,8 +38,10 @@ class Issue < ActiveRecord::Base
                       :panel => "198x130#" },
                     :storage => :s3,
                     :s3_credentials => S3Config.credential_file,
-                    :path => IMAGE_ATTACHMENT_PATH,
-                    :default_url => '/images/issue_img_:style.gif')
+                    :path => IMAGE_ATTACHMENT_PATH)
+  validates_attachment_content_type :image,
+                                    :content_type => /image\/*/,
+                                    :message => "Not a valid image file."
 
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
@@ -47,7 +49,8 @@ class Issue < ActiveRecord::Base
 
   validates :name, :presence => true, :length => { :minimum => 5 }
   validates_uniqueness_of :name
-
+  validates_attachment_presence :image
+  
   scope(:most_active, :select =>
         'count(1) as contribution_count, issues.*',
         :joins => [:contributions],

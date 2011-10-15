@@ -607,7 +607,7 @@ describe Contribution do
 
     let(:contribution) {Contribution.new(content: "This is a contribution")}
     let(:conversation) {Factory.create(:conversation, title: "I'm a conversation")}
-    let(:issue)        {Issue.create(name: "I'm an Issue")}
+    let(:issue)        {Factory.create(:issue, name: "I'm an Issue")}
 
     describe "Contribution#item_id" do
 

@@ -326,5 +326,17 @@ describe Issue do
       should have_db_column(:image_content_type).of_type(:string)
       should have_db_column(:image_file_size).of_type(:integer)
     end
+    
+    it "will only allow image attachments" do
+      # allowed image mimetypes are based on what we have seen in production
+      should validate_attachment_content_type(:image).
+        allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
+        rejecting('text/plain', 'text/xml')
+    end
+    
+    it "should validate presence of attachemnt" do
+      should validate_attachment_presence(:image)
+    end
+    
   end
 end

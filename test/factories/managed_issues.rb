@@ -9,4 +9,5 @@ Factory.define :managed_issue do |f|
   f.last_visit_date nil
   f.zip_code '44313'
   #f.association :index, :factory => :managed_issue_page
+  f.image File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
 end

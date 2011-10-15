@@ -8,6 +8,7 @@ Factory.define :issue do |f|
   f.total_visits 0
   f.recent_visits 0
   f.last_visit_date nil
-  f.zip_code '44313'
+  f.zip_code '44313' 
   f.position nil
+  f.image File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
 end

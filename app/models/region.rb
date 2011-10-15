@@ -1,6 +1,20 @@
 class Region < ActiveRecord::Base
 
   before_save :create_zip_codes
+  
+  has_many :zip_codes
+  accepts_nested_attributes_for :zip_codes
+
+  has_attached_file :image,
+    :styles => {:normal => "300x200>"},
+      :storage => :s3,
+      :s3_credentials => S3Config.credential_file,
+      :path => ":attachment/region/:id/:style/:filename"
+  validates_attachment_presence :image
+  validates_attachment_content_type :image,
+                                    :content_type => /image\/*/,
+                                    :message => "Not a valid image file."
+
 
   def self.default_name
     "National"
@@ -37,16 +51,7 @@ class Region < ActiveRecord::Base
     end
     rv
   end
-
-  has_many :zip_codes
-  accepts_nested_attributes_for :zip_codes
-
-  has_attached_file :image,
-    :styles => {:normal => "300x200>"},
-      :storage => :s3,
-      :s3_credentials => S3Config.credential_file,
-      :path => ":attachment/region/:id/:style/:filename"
-
+                                    
   def default?
     self.name == Region.default_name
   end

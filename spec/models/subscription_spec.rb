@@ -29,7 +29,7 @@ describe Subscription do
   describe "name" do
     context "Subscribable type is an Issue" do
       it "returns the issue's name" do
-        issue = Issue.create(name: "Cleveland Rocks")
+        issue = Factory.create(:issue, name: "Cleveland Rocks")
         subscription = Subscription.create(subscribable_type: issue.class.to_s, subscribable_id: issue.id)
         subscription.name == "Cleveland Rocks"
       end
